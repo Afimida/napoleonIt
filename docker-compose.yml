@@ -1,0 +1,24 @@
+version: '3.3'
+
+services:
+  auth-server:
+    build: ./docker/auth-server/
+    container_name: auth-server
+    command: python auth-server.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./docker/auth-server:/etc/nginx/conf.d
+      - ./auth-app/:/var/www/
+      - ./docker/auth-server/logs:/var/log/nginx/
+    working_dir: /var/www/
+    links:
+      - database-auth
+
+  database-auth:
+    image: postgres:12-alpine
+    container_name: database-auth
+    env_file:
+      - ./docker/auth-database-server/database.env
+    volumes:
+      - ./docker/auth-database-server/database-data:/var/lib/postgresql/data/
