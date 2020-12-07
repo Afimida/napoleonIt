@@ -1,1 +1,4 @@
 .idea
+venv
+auth-app/__pycache__
+__pycache__

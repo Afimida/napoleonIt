@@ -8,17 +8,41 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./docker/auth-server:/etc/nginx/conf.d
-      - ./auth-app/:/var/www/
-      - ./docker/auth-server/logs:/var/log/nginx/
-    working_dir: /var/www/
+      - ./auth-app/:/var/www/app
+      - ./docker/auth-server/logs/:/var/www/logs/
+    working_dir: /var/www/app
     links:
       - database-auth
 
   database-auth:
     image: postgres:12-alpine
     container_name: database-auth
+    ports:
+      - "54320:5432"
     env_file:
       - ./docker/auth-database-server/database.env
     volumes:
       - ./docker/auth-database-server/database-data:/var/lib/postgresql/data/
+
+#  offers-server:
+#    build: ./docker/offers-server/
+#    container_name: offers-server
+#    command: python offers-server.py runserver 0.0.0.0:8001
+#    ports:
+#      - "8001:8001"
+#    volumes:
+#      - ./offers-app/:/var/www/app
+#      - ./docker/offers-server/logs/:/var/www/logs/
+#    working_dir: /var/www/app
+#    links:
+#      - database-offers
+#
+#  database-offers:
+#    image: postgres:12-alpine
+#    container_name: database-offers
+#    ports:
+#      - "54321:5432"
+#    env_file:
+#      - ./docker/offers-database-server/database.env
+#    volumes:
+#      - ./docker/offers-database-server/database-data:/var/lib/postgresql/data/
