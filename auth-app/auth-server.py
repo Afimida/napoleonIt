@@ -7,9 +7,9 @@ from auth_api.AuthRetriever import AuthRetriever
 from auth_api.UserRetriever import UserRetriever
 from auth_database import Session
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s',
-                    datefmt='%a, %d %b %Y %H:%M:%S', filename='/var/www/logs/auth-app.log', filemode='w')
+# logger = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s',
+#                     datefmt='%a, %d %b %Y %H:%M:%S', filename='/var/www/logs/auth-app.log', filemode='w')
 
 app = Sanic('auth-server')
 session = Session()
