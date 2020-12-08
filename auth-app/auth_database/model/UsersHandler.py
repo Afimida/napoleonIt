@@ -1,4 +1,3 @@
-from sqlalchemy.exc import SQLAlchemyError
 from auth_database.RowsToDict import RowsToDict
 from auth_database.model.Users import User
 
@@ -11,9 +10,9 @@ class UsersHandler:
         return users
 
     def get_user(self, session, user_id):
-        generator = RowsToDict()
-        user = generator.generate_list(session.query(User).filter_by(id=user_id).all())
+        user = session.query(User).filter_by(id=user_id).first()
+        user_data = user.to_json()
         if not user:
             return None
         else:
-            return user
+            return user_data

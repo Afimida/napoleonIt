@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-import bcrypt
 
 Base = declarative_base()
 
@@ -19,3 +18,14 @@ class User(Base):
 
     def __repr__(self):
         return self
+
+    def serialize(self, values_only=False):
+        if values_only:
+            return self.__dict__.values()
+        return self.__dict__
+
+    def to_json(self):
+        return dict(id=self.id,
+                    name=self.name,
+                    email=self.email,
+                    password=self.password)
