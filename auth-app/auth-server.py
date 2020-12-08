@@ -6,6 +6,7 @@ from auth_api.AuthRetriever import AuthRetriever
 from auth_api.UserRetriever import UserRetriever
 from auth_database import Session
 from sanic_jwt import Initialize, protected
+from swagger_ui import sanic_api_doc
 
 session = Session()
 
@@ -19,6 +20,8 @@ async def authenticate(request, *args, **kwargs):
 
 
 app = Sanic('auth-server')
+sanic_api_doc(app, config_path='./swagger/swagger.yaml', url_prefix='/swagger', title='API doc', editor=True)
+
 Initialize(
     app,
     authenticate=authenticate,
